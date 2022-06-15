@@ -9,13 +9,14 @@
 </head>
 <body>
     <h1>{{dojo.name}} Ninjas</h1>
-    
     <table class="table table-dark">
         <thead>
           <tr>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Age</th>
+            <th scope="col">Likes</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +25,18 @@
                 <th scope="row">{{ninja.first_name}}</th>
                 <td>{{ninja.last_name}}</td>
                 <td>{{ninja.age}}</td>
+                <td>{{ninja.likes}}</td>
+
+
+                {% if user.email not in ninja.users_who_liked %}
+                <td><a href="/ninja/{{ninja.id}}/like">Like</a></td>
+                {% endif %}
+                {% if user.email in ninja.users_who_liked %}
+                <td><a href="/ninja/{{ninja.id}}/unlike">Unlike</a></td>
+                {% endif %}
             </tr>
+            
+            
             {% endfor %}
         </tbody>
       </table>

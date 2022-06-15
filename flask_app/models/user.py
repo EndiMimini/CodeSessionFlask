@@ -13,6 +13,7 @@ class User:
         self.password= data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.liked_ninjas=[]
     
     @classmethod
     def save(cls,data):
@@ -38,7 +39,7 @@ class User:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(id)s;"
+        query = "SELECT * FROM users WHERE id = %(user_id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         return cls(results[0])
 
@@ -66,3 +67,9 @@ class User:
             flash("Passwords don't match","register")
             is_valid= False
         return is_valid
+
+
+    @classmethod
+    def unLike(cls, data):
+        query='DELETE FROM ninjas_was_like_from_users WHERE users_id = %(user_id)s AND ninjas_id = %(ninja_id)s;'
+        return connectToMySQL('dojos_and_ninjas').query_db(query,data)

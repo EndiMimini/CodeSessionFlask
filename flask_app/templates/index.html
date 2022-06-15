@@ -8,9 +8,13 @@
     <title>Dojos And Ninjas</title>
 </head>
 <body>
-    <div class="d-flex justify-content-around">
+    <div class="d-flex p-2 justify-content-around"> 
         <h1>Welcome {{user.first_name}}</h1>
         <a href="/logout" class="btn btn-info">Logout</a>
+    </div>
+   
+    <div class="d-flex justify-content-around">
+        
         <form action="/create/dojo" method="post">
             <h1>New Dojo</h1>
             <div class="form-group">

@@ -1,3 +1,4 @@
+from flask import session
 from flask_app.config.mysqlconnection import connectToMySQL
 from .ninja import Ninja
 
@@ -6,6 +7,7 @@ class Dojo:
     def __init__(self, data):
         self.id = data['id']
         self.name = data['name']
+        self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.ninjas = []
@@ -16,14 +18,13 @@ class Dojo:
         query = 'SELECT * FROM dojos;'
         results = connectToMySQL('dojos_and_ninjas').query_db(query)
         dojos = []
-
         for d in results:
             dojos.append( cls(d))
         return dojos
 
     @classmethod
     def save(cls, data):
-        query = 'INSERT INTO dojos (name) VALUES (%(name)s);'
+        query = 'INSERT INTO dojos (name, user_id) VALUES (%(name)s, %(user_id)s);'
         results = connectToMySQL('dojos_and_ninjas').query_db(query, data)
         return results
     
@@ -33,13 +34,20 @@ class Dojo:
         results = connectToMySQL('dojos_and_ninjas').query_db(query, data)
         dojo = cls(results[0])
         for row in results:
+            data2={
+                'ninja_id':row['ninjas.id']
+            }
+            likesnr = len(Ninja.getUsersWhoLiked(data2))
             n = {
                 'id': row['ninjas.id'],
                 'first_name': row['first_name'],
                 'last_name': row['last_name'],
                 'age': row['age'],
+                'likes': likesnr,
                 'created_at': row['ninjas.created_at'],
-                'updated_at': row['ninjas.updated_at']
+                'updated_at': row['ninjas.updated_at'],
+                'users_who_liked': Ninja.getUsersWhoLiked(data2)
             }
-            dojo.ninjas.append( Ninja(n) )
+            
+            dojo.ninjas.append(n)
         return dojo

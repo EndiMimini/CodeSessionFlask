@@ -1,19 +1,30 @@
 from flask import render_template, redirect, request, session
 from flask_app import app
 from flask_app.models.dojo import Dojo
+from flask_app.models.user import User
+from flask_app.models.ninja import Ninja
 
 @app.route('/create/dojo', methods = ['POST'])
 def create_dojo():
-    Dojo.save(request.form)
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data={
+        'user_id': session['user_id'],
+        'name': request.form['name']
+    }
+    Dojo.save(data)
     return redirect('/dojos')
 
 @app.route('/dojo/<int:id>')
 def show_dojo(id):
     data={
-        'id': id
+        'id': id,
+        'user_id': session['user_id'] 
     }
-    return render_template('dojo.html', dojo=Dojo.get_one_with_ninjas(data))
-
+    
+    user = User.get_by_id(data)
+    myDojo=Dojo.get_one_with_ninjas(data)
+    return render_template('dojo.html', user=user, dojo=myDojo)
 
 
 

@@ -9,6 +9,8 @@ bcrypt= Bcrypt(app)
 
 @app.route('/')
 def index():
+    if 'user_id' in session:
+        return redirect('/dojos')
     return render_template('login_register.html')
 
 @app.route('/register', methods=['POST'])
@@ -44,7 +46,7 @@ def dojos():
     if 'user_id' not in session:
         return redirect ('/logout')
     data={
-        'id': session['user_id']
+        'user_id': session['user_id']
     }
     dojos = Dojo.get_all()
     return render_template('index.html', user=User.get_by_id(data), all_dojos=dojos)
