@@ -11,6 +11,16 @@
     
     <form action="/create/ninja" method="post">
         <h1>New Ninja</h1>
+        {% with messages = get_flashed_messages(category_filter=['addNinja']) %}
+        {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
         <div class="form-group">
             <label for="dojo_id">Dojo:</label>
             <select name="dojo_id" class="form-control">

@@ -17,13 +17,7 @@ def index():
 def register():
     if not User.validate_register(request.form):
         return redirect('/')
-    data = {
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "email": request.form['email'],
-        "password": bcrypt.generate_password_hash(request.form['password']),
-        }
-    id= User.save(data)
+    id= User.save(request.form)
     session['user_id']= id
     return redirect ('/dojos')
 

@@ -27,6 +27,10 @@ class Dojo:
         query = 'INSERT INTO dojos (name, user_id) VALUES (%(name)s, %(user_id)s);'
         results = connectToMySQL('dojos_and_ninjas').query_db(query, data)
         return results
+
+
+
+     
     
     @classmethod
     def get_one_with_ninjas(cls, data):

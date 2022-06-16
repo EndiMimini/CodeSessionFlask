@@ -1,5 +1,6 @@
 from unittest import result
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask import flash
 
 class Ninja:
 
@@ -42,3 +43,20 @@ class Ninja:
         for row in results:
             myNinja.users_who_liked.append(row['email'])
         return myNinja.users_who_liked
+
+
+    
+
+    @staticmethod
+    def validate_ninja(ninja):
+        is_valid = True
+        if len(ninja['first_name']) < 3:
+            flash("Ninja's First name must be at least 3 characters","addNinja")
+            is_valid= False
+        if len(ninja['last_name']) < 3:
+            flash("Last name must be at least 3 characters","addNinja")
+            is_valid= False
+        if len(ninja['age']) < 1:
+            flash("Age is required","addNinja")
+            is_valid= False
+        return is_valid

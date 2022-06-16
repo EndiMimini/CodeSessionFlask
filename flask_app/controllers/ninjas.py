@@ -10,6 +10,8 @@ def ninjas():
 def create_ninja():
     if 'user_id' not in session:
         return redirect('/logout')
+    if not ninja.Ninja.validate_ninja(request.form):
+        return redirect('/ninjas')
     ninja.Ninja.save(request.form)
     return redirect('/')
 
@@ -27,7 +29,7 @@ def like_ninja(id):
     ninja.Ninja.addLike(data)
     ninja.Ninja.getUsersWhoLiked(data)
 
-    return redirect('/')
+    return redirect(request.referrer)
 
 @app.route('/ninja/<int:id>/unlike', methods=['GET','PUT'])
 def unlike_ninja(id):
@@ -38,4 +40,4 @@ def unlike_ninja(id):
         'user_id': session['user_id'],
     }
     user.User.unLike(data)
-    return redirect('/')
+    return redirect(request.referrer)
