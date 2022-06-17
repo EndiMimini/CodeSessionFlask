@@ -59,6 +59,7 @@ class Ninja:
         for row in results:
             myNinja.users_who_liked.append(row['email'])
         myNinja.likes=len(myNinja.users_who_liked)
+        print(myNinja.users_who_liked)
         return myNinja
 
 

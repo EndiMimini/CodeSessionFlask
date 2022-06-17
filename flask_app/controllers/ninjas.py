@@ -56,4 +56,5 @@ def unlike_ninja(id):
     }
     User.unLike(data)
     updatedNinja = Ninja.getUsersWhoLiked(data)
+    
     return render_template('showOneNinja.html', ninja=updatedNinja,  user=User.get_by_id(data))
