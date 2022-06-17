@@ -8,7 +8,7 @@
     <title>Dojos And Ninjas</title>
 </head>
 <body>
-    <h1>{{dojo.name}} Ninjas</h1>
+    <h1>{{ninja.first_name}} Ninjas</h1>
     <table class="table table-dark">
         <thead>
           <tr>
@@ -20,11 +20,10 @@
           </tr>
         </thead>
         <tbody>
-            {% for ninja in dojo.ninjas %}
             <tr>
                 <th scope="row">{{ninja.first_name}}</th>
                 <td>{{ninja.last_name}}</td>
-                <td>{{ninja.age}}</td>
+                <td>{{ninja.users_who_liked}}</td>
                 <td>{{ninja.likes}}</td>
 
 
@@ -35,9 +34,7 @@
                 <td><a href="/ninja/{{ninja.id}}/unlike">Unlike</a></td>
                 {% endif %}
             </tr>
-            
-            
-            {% endfor %}
+
         </tbody>
       </table>
       <a href="/">Home</a>

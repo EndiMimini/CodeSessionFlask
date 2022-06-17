@@ -15,24 +15,14 @@
    
     <div class="d-flex justify-content-around">
         
-        <form action="/create/dojo" method="post">
-            <h1>New Dojo</h1>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" name="name" class="form-control">
-            </div>
-            <input type="submit" value="Create" class="btn btn-primary">
-        </form>
+        <a href="/ninjas">Add Ninja</a>
         <div>
-            <h1>All Dojos</h1>
+            <h1>All Ninjas</h1>
             <div class="border  border-dark p-2">
-                {% for dojo in all_dojos %}
-                <p><a href="/dojo/{{dojo.id}}">{{dojo.name}}</a></p>
+                {% for ninja in all_ninjas %}
+                <p><a href="/ninja/{{ninja.id}}">{{ninja.first_name}}</a></p>
                 {% endfor %}
             </div>
-            
-        
-            <a class="m-4" href="/ninjas">Add Ninja</a>
         </div>
        
     </div>

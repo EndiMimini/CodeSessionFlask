@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import dojos, ninjas, users
+from flask_app.controllers import  ninjas, users
 
 
 if __name__== "__main__":

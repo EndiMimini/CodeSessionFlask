@@ -14,6 +14,17 @@ class Ninja:
         self.updated_at = data['updated_at']
         self.users_who_liked=[]
 
+
+
+    @classmethod
+    def get_all(cls):
+        query = "SELECT * FROM ninjas;"
+        results = connectToMySQL('dojos_and_ninjas').query_db(query)
+        ninjas = []
+        for row in results:
+            ninjas.append( cls(row))
+        return ninjas
+
     @classmethod
     def get_one(cls,data):
         query = "SELECT * FROM ninjas WHERE id = %(ninja_id)s;"
@@ -22,7 +33,12 @@ class Ninja:
 
     @classmethod
     def save(cls, data):
-        query = 'INSERT INTO ninjas (first_name, last_name, age, dojo_id) VALUES ( %(first_name)s, %(last_name)s, %(age)s, %(dojo_id)s);'
+        query = 'INSERT INTO ninjas (first_name, last_name, age ) VALUES ( %(first_name)s, %(last_name)s, %(age)s );'
+        return connectToMySQL('dojos_and_ninjas').query_db(query, data)
+    
+    @classmethod
+    def update(cls, data):
+        query = 'UPDATE ninjas SET likes = %(likes)s WHERE id=%(ninja_id)s;'
         return connectToMySQL('dojos_and_ninjas').query_db(query, data)
 
     @classmethod
@@ -42,7 +58,8 @@ class Ninja:
         myNinja = Ninja.get_one(data)
         for row in results:
             myNinja.users_who_liked.append(row['email'])
-        return myNinja.users_who_liked
+        myNinja.likes=len(myNinja.users_who_liked)
+        return myNinja
 
 
     
